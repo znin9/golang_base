@@ -10,17 +10,17 @@ import (
 )
 
 func main() {
-	// test http.Serve(l net.Listener,h Handler)
+	// 1.test http.Serve(l net.Listener,h Handler)
 	// Serve()
 
-	// test http.ListenerAndServe
+	// 2.test http.ListenerAndServe
 	// 效果同上Serve()
 	// ListenAndServe()
 
-	// test 自己创建一个多路复用器
+	// 3.test 自己创建一个多路复用器
 	// ListenAndServeWithServeMux()
 
-	// test Server的Handler是一个HandlerFunc
+	// 4.test Server的Handler是一个HandlerFunc
 	HandlerFuncInServer()
 }
 
@@ -87,16 +87,13 @@ func ListenAndServeWithServeMux() {
 // Demo: 使用HandlerFunc装配在Server的Handler处，所有请求都由HandlerFunc进行处理
 
 func HandlerFuncInServer() {
-
 	f := func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("all http request handle by this HandlerFunc"))
 	}
-
-	err := http.ListenAndServe(":8080", f)
+	err := http.ListenAndServe(":8080", http.HandlerFunc(f))
 	if err != nil {
 		panic(err)
 	}
-	// TODO
 }
 
 // ==============================================
